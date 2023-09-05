@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.get("/", (req, res) => res.type('html').send(html()));
+app.get("/you", (req, res) => res.type('html').send(html("Nimoo")));
 
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
@@ -58,7 +59,7 @@ html(name)
   </head>
   <body>
     <section>
-      🤍🤍 Nimoo 🤍🤍
+      🤍🤍 ${name} 🤍🤍
     </section>
   </body>
 </html>
