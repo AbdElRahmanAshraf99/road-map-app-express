@@ -1,5 +1,5 @@
 export function fetchJavaFundamentalSubTopic(subTopic) {
-    if (subTopic === "functions")
+    if (subTopic === "Functions")
         return {
             mdFileData: 'A **Function (Method)** is a way to perform some task. Similarly, in programming like Java, a function method is a block of code written to perform a\n' +
                 'specific task repeatedly. It provides reusability of code. We write the function once and use it many times. It works on the ‘DRY’ principle i.e., “Do\n' +
