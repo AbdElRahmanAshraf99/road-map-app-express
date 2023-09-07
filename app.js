@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.get("/java/Fundamentals/Functions", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Functions")));
+app.get("/java/Fundamentals/Packages", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Packages")));
 
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
