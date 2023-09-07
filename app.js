@@ -1,4 +1,3 @@
-import "./javaFundamentals";
 import {fetchJavaFundamentalSubTopic} from "./javaFundamentals";
 
 const express = require("express");
