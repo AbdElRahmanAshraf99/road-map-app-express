@@ -2,14 +2,22 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
-
-app.get("/java/Fundamentals/Functions", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Functions")));
-app.get("/java/Fundamentals/Packages", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Packages")));
-
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+app.get("/java/*", (req, res) => res.type('json').send(printReqAndRes(req, res)));
+// app.get("/java/Fundamentals/Functions", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Functions")));
+// app.get("/java/Fundamentals/Packages", (req, res) => res.type('json').send(fetchJavaFundamentalSubTopic("Packages")));
+
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
+
+function printReqAndRes(req, res) {
+    return {
+        req: req,
+        res: res
+    }
+}
 
 function fetchJavaFundamentalSubTopic(subTopic) {
     if (subTopic === "Functions")
