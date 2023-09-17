@@ -5,6 +5,8 @@ const app = express();
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
+app.use(express.static('public'));
+app.use('/assets', express.static('assets'));
 app.get("/*", (req, res) => res.type('json').send(fetchRoadMapData(req)));
 
 
