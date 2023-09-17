@@ -135,7 +135,7 @@ function fetchGettingDeeperData(subTopic, req) {
                     'by the threads that are used in a program. However, the memory area created by JVM is destroyed only when the JVM exits. The data areas of thread are\n' +
                     'created during instantiation and destroyed when the thread exits.\n' +
                     '\n' +
-                    '![Java Memory Areas](' + req.headers.host + '/assets/java/gettingDeeper/JavaMemory.png' + ')\n' +
+                    '![Java Memory Areas](https://' + req.headers.host + '/assets/java/gettingDeeper/JavaMemory.png' + ')\n' +
                     '\n' +
                     'Let’s study these parts of memory area in detail:\n' +
                     '\n' +
