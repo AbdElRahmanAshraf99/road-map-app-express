@@ -135,7 +135,7 @@ function fetchGettingDeeperData(subTopic, req) {
                     'by the threads that are used in a program. However, the memory area created by JVM is destroyed only when the JVM exits. The data areas of thread are\n' +
                     'created during instantiation and destroyed when the thread exits.\n' +
                     '\n' +
-                    '![Java Memory Areas](https://' + req.headers.host + '/assets/java/gettingDeeper/JavaMemory.png' + ')\n' +
+                    '![Java Memory Areas](https://' + req.headers.host + '/assets/java/gettingDeeper/JavaMemory.png)\n' +
                     '\n' +
                     'Let’s study these parts of memory area in detail:\n' +
                     '\n' +
@@ -198,6 +198,195 @@ function fetchGettingDeeperData(subTopic, req) {
                     'of resources, and it’s consumption. Also, it helps in finding the memory leaks or inconsistency, and helps in debugging memory related errors. However,\n' +
                     'the memory management concept is extremely vast and therefore one must put his best to study it as much as possible to improve the knowledge of the\n' +
                     'same.\n'
+            }
+        case "CollectionFramework":
+            return {
+                mdFileData: '## Collection Framework in Java\n' +
+                    '\n' +
+                    '### What is a Framework in Java?\n' +
+                    '\n' +
+                    '- It provides ready-made architecture.\n' +
+                    '- It represents a set of classes and interfaces.\n' +
+                    '- It is optional.\n' +
+                    '\n' +
+                    '### What is a Collection in Java?\n' +
+                    '\n' +
+                    '**Collection** represents a single unit of objects like a group.\n' +
+                    '\n' +
+                    '### What is Collection Framework in Java?\n' +
+                    '\n' +
+                    'The Collection framework represents a unified architecture for storing and manipulating a group of objects. It has:\n' +
+                    '\n' +
+                    '- Interfaces and its implementations (classes).\n' +
+                    '- Algorithms\n' +
+                    '\n' +
+                    '![Collection Hierarchy](https://' + req.headers.host + '/assets/java/gettingDeeper/collectionHierarchy.jpeg)\n' +
+                    '\n' +
+                    '### Iterable (Interface)\n' +
+                    '\n' +
+                    'It is the root interface for all the collection classes.\n' +
+                    '\n' +
+                    '1. Iterator<T> iterator(); ==> { E next(), boolean hasNext(), void remove()}\n' +
+                    '2. void forEach(Consumer<? super T> action);\n' +
+                    '3. Spliterator<T> spliterator();\n' +
+                    '\n' +
+                    '### Collection (Interface) (extends Iterable)\n' +
+                    '\n' +
+                    '1. boolean add(E e);\n' +
+                    '2. boolean addAll(Collection<? extends E> c);\n' +
+                    '3. boolean contains(Object o);\n' +
+                    '4. boolean containsAll(Collection<?> c);\n' +
+                    '5. boolean remove(Object o);\n' +
+                    '6. boolean removeAll(Collection<?> c);\n' +
+                    '7. boolean removeIf(Predicate<? super E> filter)\n' +
+                    '8. boolean retainAll(Collection<?> c);\n' +
+                    '9. void clear();\n' +
+                    '10. int size();\n' +
+                    '11. boolean isEmpty();\n' +
+                    '12. Object[] toArray();\n' +
+                    '13. T[] toArray(T[] a);\n' +
+                    '14. Stream<E> stream();\n' +
+                    '15. Stream<E> parallelStream();\n' +
+                    '\n' +
+                    '### List (Interface) (extends Collection)\n' +
+                    '\n' +
+                    'Properties:(Ordered - index-based - Can contain Duplicates)\n' +
+                    '\n' +
+                    '1. void add(int index, E element);\n' +
+                    '2. E set(int index, E element);\n' +
+                    '3. boolean addAll(int index, Collection<? extends E> c);\n' +
+                    '4. void replaceAll(UnaryOperator<E> operator);\n' +
+                    '5. E get(int index);\n' +
+                    '6. E remove(int index);\n' +
+                    '7. void sort(Comparator<? super E> c);\n' +
+                    '8. int indexOf(Object o);\n' +
+                    '9. int lastIndexOf(Object o);\n' +
+                    '10. List<E> subList(int fromIndex, int toIndex);\n' +
+                    '11. ListIterator<E> listIterator();\n' +
+                    '12. ListIterator<E> listIterator(int index);\n' +
+                    '\n' +
+                    '### ArrayList (Class) (implements List)\n' +
+                    '\n' +
+                    'Properties (Dynamic array - non-synchronized)\n' +
+                    '\n' +
+                    '### LinkedList (Class) (implements List, Dequeue)\n' +
+                    '\n' +
+                    'Properties (Fast in manipulating - non-synchronized)\n' +
+                    '\n' +
+                    '### Vector (Class) (implements List)\n' +
+                    '\n' +
+                    'Properties (Synchronized ArrayList)\n' +
+                    '\n' +
+                    '### Stack (Class) (extends Vector)\n' +
+                    '\n' +
+                    'Properties (Last-in-first-out order)\n' +
+                    '\n' +
+                    '### Set (Interface) (extends Collection)\n' +
+                    '\n' +
+                    'Properties:(Not Ordered - Not index-based - Can not contain Duplicates)\n' +
+                    '\n' +
+                    'Don\'t have Extra methods (only extended)\n' +
+                    '\n' +
+                    '### HashSet (Class) (implements Set)\n' +
+                    '\n' +
+                    'Properties (Using Hash Table Storing)\n' +
+                    '\n' +
+                    '### LinkedHashSet (Class) (implements Set)\n' +
+                    '\n' +
+                    'Properties (LinkedList Set)\n' +
+                    '\n' +
+                    '### SortedSet (Interface) (extends Set)\n' +
+                    '\n' +
+                    'Properties:(Ordered In Ascending Order)\n' +
+                    '\n' +
+                    '1. Comparator<? super E> comparator();\n' +
+                    '2. SortedSet<E> subSet(E fromElement, E toElement);\n' +
+                    '3. SortedSet<E> headSet(E toElement);\n' +
+                    '4. SortedSet<E> tailSet(E fromElement);\n' +
+                    '5. E first();\n' +
+                    '6. E last();\n' +
+                    '\n' +
+                    '### TreeSet (Class) (implements SortedSet)\n' +
+                    '\n' +
+                    'Properties (Tree Storing - Ascending Order)\n' +
+                    '\n' +
+                    '### Queue (Interface) (extends Collection)\n' +
+                    '\n' +
+                    'Properties:(First-in-First-out order)\n' +
+                    '\n' +
+                    '1. boolean offer(E e);\n' +
+                    '2. E remove();\n' +
+                    '3. E poll();\n' +
+                    '4. E element();\n' +
+                    '5. E peek();\n' +
+                    '\n' +
+                    '### PriorityQueue (Class) (implements Queue)\n' +
+                    '\n' +
+                    'Properties (Priorities - No Nulls )\n' +
+                    '\n' +
+                    '### Deque (Interface) (extends Queue)\n' +
+                    '\n' +
+                    'Properties:(double-ended queue)\n' +
+                    '\n' +
+                    '1. void addFirst(E e);\n' +
+                    '2. void addLast(E e);\n' +
+                    '3. boolean offerFirst(E e);\n' +
+                    '4. boolean offerLast(E e);\n' +
+                    '5. E removeFirst();\n' +
+                    '6. E removeLast();\n' +
+                    '7. E pollFirst();\n' +
+                    '8. E pollLast();\n' +
+                    '9. E getFirst();\n' +
+                    '10. E getLast();\n' +
+                    '11. E peekFirst();\n' +
+                    '12. E peekLast();\n' +
+                    '13. boolean removeFirstOccurrence(Object o);\n' +
+                    '14. boolean removeLastOccurrence(Object o);\n' +
+                    '15. void push(E e);\n' +
+                    '16. E pop();\n' +
+                    '17. Iterator<E> descendingIterator();\n' +
+                    '\n' +
+                    '### ArrayDequeue (Class) (implements Deque)\n' +
+                    '\n' +
+                    'Properties (No Capacity Restrictions)\n' +
+                    '\n' +
+                    '### Map (Interface) (Not Iterable)\n' +
+                    '\n' +
+                    'Properties (Key-value based - Not Ordered - No Duplicates)\n' +
+                    '\n' +
+                    '1. V put(K key, V value);\n' +
+                    '2. V putIfAbsent(K key, V value);\n' +
+                    '3. void putAll(Map<? extends K, ? extends V> m);\n' +
+                    '4. V get(Object key);\n' +
+                    '5. V getOrDefault(Object key, V defaultValue);\n' +
+                    '6. boolean containsKey(Object key);\n' +
+                    '7. boolean containsValue(Object value);\n' +
+                    '8. Set<K> keySet();\n' +
+                    '9. Collection<V> values();\n' +
+                    '10. Set<Map.Entry<K, V>> entrySet();\n' +
+                    '11. boolean isEmpty();\n' +
+                    '12. V remove(Object key);\n' +
+                    '13. boolean remove(Object key, Object value)\n' +
+                    '14. void clear();\n' +
+                    '15. int size();\n' +
+                    '16. void forEach(BiConsumer<? super K, ? super V> action);\n' +
+                    '17. boolean replace(K key, V oldValue, V newValue)\n' +
+                    '18. V replace(K key, V value)\n' +
+                    '19. void replaceAll(BiFunction<? super K, ? super V, ? extends V> function);\n' +
+                    '20. V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction);\n' +
+                    '21. V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction);\n' +
+                    '22. V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction);\n' +
+                    '23. V merge(K key, V value, BiFunction<? super V, ? super V, ? extends V> remappingFunction);\n' +
+                    '\n' +
+                    '### ConcurrentMap (Interface) (extends Map)\n' +
+                    '\n' +
+                    '### HashMap (Class) (implements Map)\n' +
+                    '\n' +
+                    '### LinkedHashMap (Class) (implements Map)\n' +
+                    '\n' +
+                    '### HashTable (Class) (implements Map)\n' +
+                    '\n' +
+                    '### ArrayMap (Class) (implements Map)\n'
             }
         default:
             return {
