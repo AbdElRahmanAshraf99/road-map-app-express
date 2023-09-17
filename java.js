@@ -1,4 +1,6 @@
-export function fetchJavaRoadMapData(req) {
+module.exports={fetchJavaRoadMapData}
+
+function fetchJavaRoadMapData(req) {
     let url = require('url');
     let url_parts = url.parse(req.url, true);
     let query = url_parts.query;
