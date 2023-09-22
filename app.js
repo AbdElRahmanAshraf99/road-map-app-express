@@ -10,8 +10,8 @@ app.use('/assets', express.static('assets'));
 app.get("/*", (req, res) => res.type('json').send(fetchRoadMapData(req)));
 
 
-// server.keepAliveTimeout = 120 * 1000;
-// server.headersTimeout = 120 * 1000;
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
 
 function fetchRoadMapData(req, res) {
     let url = require('url');
