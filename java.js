@@ -831,38 +831,38 @@ function fetchGettingDeeperData(subTopic, req) {
                     '\n' +
                     '```java\n' +
                     'public class Person implements Serializable\n' +
-                    '{\n' +
-                    '\tprivate static final long serialVersionUID = 1L;\n' +
-                    '\tstatic String country = "ITALY";\n' +
-                    '\tprivate int age;\n' +
-                    '\tprivate String name;\n' +
-                    '\ttransient int height;\n' +
-                    '\t// getters and setters\n' +
-                    '}\n' +
+                    '{' +
+                    '\tprivate static final long serialVersionUID = 1L;' +
+                    '\tstatic String country = "ITALY";' +
+                    '\tprivate int age;' +
+                    '\tprivate String name;' +
+                    '\ttransient int height;' +
+                    '\t// getters and setters' +
+                    '}' +
                     '```\n' +
                     '\n' +
                     'The test below shows an example of saving an object of type Person to a local file, and then reading the value back in:\n' +
                     '\n' +
                     '```java\n' +
-                    '@Test public void whenSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException{\n' +
-                    '\t\tPerson person=new Person();\n' +
-                    '\t\tperson.setAge(20);\n' +
-                    '\t\tperson.setName("Joe");\n' +
+                    '@Test public void whenSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException{' +
+                    '\t\tPerson person=new Person();' +
+                    '\t\tperson.setAge(20);' +
+                    '\t\tperson.setName("Joe");' +
                     '\n' +
-                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile.txt");\n' +
-                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);\n' +
-                    '\t\tobjectOutputStream.writeObject(person);\n' +
-                    '\t\tobjectOutputStream.flush();\n' +
-                    '\t\tobjectOutputStream.close();\n' +
+                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile.txt");' +
+                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);' +
+                    '\t\tobjectOutputStream.writeObject(person);' +
+                    '\t\tobjectOutputStream.flush();' +
+                    '\t\tobjectOutputStream.close();' +
                     '\n' +
-                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile.txt");\n' +
-                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);\n' +
-                    '\t\tPerson p2=(Person)objectInputStream.readObject();\n' +
-                    '\t\tobjectInputStream.close();\n' +
+                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile.txt");' +
+                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);' +
+                    '\t\tPerson p2=(Person)objectInputStream.readObject();' +
+                    '\t\tobjectInputStream.close();' +
                     '\n' +
-                    '\t\tassertTrue(p2.getAge()==person.getAge());\n' +
-                    '\t\tassertTrue(p2.getName().equals(person.getName()));\n' +
-                    '\t\t}\n' +
+                    '\t\tassertTrue(p2.getAge()==person.getAge());' +
+                    '\t\tassertTrue(p2.getName().equals(person.getName()));' +
+                    '\t\t}' +
                     '```\n' +
                     '\n' +
                     'We used ObjectOutputStream for saving the state of this object to a file using FileOutputStream. The file “yourfile.txt” is created in the project\n' +
@@ -883,11 +883,11 @@ function fetchGettingDeeperData(subTopic, req) {
                     '\n' +
                     '```java\n' +
                     'public class Person implements Serializable\n' +
-                    '{\n' +
-                    '\tprivate int age;\n' +
-                    '\tprivate String name;\n' +
-                    '\tprivate Address country; // must be serializable too\n' +
-                    '}\n' +
+                    '{' +
+                    '\tprivate int age;' +
+                    '\tprivate String name;' +
+                    '\tprivate Address country; // must be serializable too' +
+                    '}' +
                     '```\n' +
                     '\n' +
                     'If one of the fields in a serializable object consists of an array of objects, then all of these objects must be serializable as well, or else a\n' +
@@ -923,72 +923,72 @@ function fetchGettingDeeperData(subTopic, req) {
                     'With these methods, we can serialize the unserializable attributes into other forms that we can serialize:\n' +
                     '\n' +
                     '```java\n' +
-                    'public class Employee implements Serializable\n' +
-                    '{\n' +
-                    '\tprivate static final long serialVersionUID = 1L;\n' +
-                    '\tprivate transient Address address;\n' +
-                    '\tprivate Person person;\n' +
+                    'public class Employee implements Serializab' +
+                    '{' +
+                    '\tprivate static final long serialVersionUID = 1L;' +
+                    '\tprivate transient Address address;' +
+                    '\tprivate Person person;' +
                     '\n' +
-                    '\t// setters and getters\n' +
+                    '\t// setters and getters' +
                     '\n' +
-                    '\tprivate void writeObject(ObjectOutputStream oos) throws IOException\n' +
+                    '\tprivate void writeObject(ObjectOutputStream oos) throws IOException' +
                     '\t{\n' +
-                    '\t\toos.defaultWriteObject();\n' +
-                    '\t\toos.writeObject(address.getHouseNumber());\n' +
-                    '\t}\n' +
+                    '\t\toos.defaultWriteObject();' +
+                    '\t\toos.writeObject(address.getHouseNumber());' +
+                    '\t}' +
                     '\n' +
-                    '\tprivate void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException\n' +
-                    '\t{\n' +
-                    '\t\tois.defaultReadObject();\n' +
-                    '\t\tInteger houseNumber = (Integer) ois.readObject();\n' +
-                    '\t\tAddress a = new Address();\n' +
-                    '\t\ta.setHouseNumber(houseNumber);\n' +
-                    '\t\tthis.setAddress(a);\n' +
-                    '\t}\n' +
-                    '}\n' +
-                    '```\n' +
+                    '\tprivate void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException' +
+                    '\t{' +
+                    '\t\tois.defaultReadObject();' +
+                    '\t\tInteger houseNumber = (Integer) ois.readObject();' +
+                    '\t\tAddress a = new Address();' +
+                    '\t\ta.setHouseNumber(houseNumber);' +
+                    '\t\tthis.setAddress(a);' +
+                    '\t}' +
+                    '}' +
+                    '```' +
                     '\n' +
                     '```java\n' +
                     'public class Address\n' +
-                    '{\n' +
-                    '\tprivate int houseNumber;\n' +
-                    '\t// setters and getters\n' +
-                    '}\n' +
-                    '```\n' +
+                    '{' +
+                    '\tprivate int houseNumber;' +
+                    '\t// setters and getters' +
+                    '}' +
+                    '```' +
                     '\n' +
                     'We can run the following unit test to test this custom serialization:\n' +
                     '\n' +
                     '```java\n' +
-                    '@Test public void whenCustomSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException\n' +
-                    '\t\t{\n' +
-                    '\t\tPerson p=new Person();\n' +
-                    '\t\tp.setAge(20);\n' +
-                    '\t\tp.setName("Joe");\n' +
+                    '@Test public void whenCustomSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException' +
+                    '\t\t{' +
+                    '\t\tPerson p=new Person();' +
+                    '\t\tp.setAge(20);' +
+                    '\t\tp.setName("Joe");' +
                     '\n' +
-                    '\t\tAddress a=new Address();\n' +
-                    '\t\ta.setHouseNumber(1);\n' +
+                    '\t\tAddress a=new Address();' +
+                    '\t\ta.setHouseNumber(1);' +
                     '\n' +
-                    '\t\tEmployee e=new Employee();\n' +
-                    '\t\te.setPerson(p);\n' +
-                    '\t\te.setAddress(a);\n' +
+                    '\t\tEmployee e=new Employee();' +
+                    '\t\te.setPerson(p);' +
+                    '\t\te.setAddress(a);' +
                     '\n' +
-                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile2.txt");\n' +
-                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);\n' +
-                    '\t\tobjectOutputStream.writeObject(e);\n' +
-                    '\t\tobjectOutputStream.flush();\n' +
-                    '\t\tobjectOutputStream.close();\n' +
+                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile2.txt");' +
+                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);' +
+                    '\t\tobjectOutputStream.writeObject(e);' +
+                    '\t\tobjectOutputStream.flush();' +
+                    '\t\tobjectOutputStream.close();' +
                     '\n' +
-                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile2.txt");\n' +
-                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);\n' +
-                    '\t\tEmployee e2=(Employee)objectInputStream.readObject();\n' +
-                    '\t\tobjectInputStream.close();\n' +
+                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile2.txt");' +
+                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);' +
+                    '\t\tEmployee e2=(Employee)objectInputStream.readObject();' +
+                    '\t\tobjectInputStream.close();' +
                     '\n' +
-                    '\t\tassertTrue(\n' +
-                    '\t\te2.getPerson().getAge()==e.getPerson().getAge());\n' +
-                    '\t\tassertTrue(\n' +
-                    '\t\te2.getAddress().getHouseNumber()==e.getAddress().getHouseNumber());\n' +
-                    '\t\t}\n' +
-                    '```\n' +
+                    '\t\tassertTrue(' +
+                    '\t\te2.getPerson().getAge()==e.getPerson().getAge());' +
+                    '\t\tassertTrue(' +
+                    '\t\te2.getAddress().getHouseNumber()==e.getAddress().getHouseNumber());' +
+                    '\t\t}' +
+                    '```' +
                     '\n' +
                     'In this code, we can see how to save some unserializable attributes by serializing Address with custom serialization. Note that we must mark the\n' +
                     'unserializable attributes as transient to avoid the NotSerializableException.\n' +
