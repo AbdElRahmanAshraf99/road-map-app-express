@@ -805,200 +805,207 @@ function fetchGettingDeeperData(subTopic, req) {
             }
         case "Serialization":
             return {
-                mdFileData: '**Serialization** is the conversion of the state of an object into a byte stream; deserialization does the opposite. Stated differently, serialization\n' +
-                    'is the conversion of a Java object into a static stream (sequence) of bytes, which we can then save to a database or transfer over a network.\n' +
-                    '\n' +
-                    '![Serialization](https://' + req.headers.host + '/assets/java/gettingDeeper/serialization.png)\n' +
-                    '\n' +
-                    'The serialization process is instance-independent; for example, we can serialize objects on one platform and deserialize them on another. Classes that\n' +
-                    'are eligible for serialization need to implement a special marker interface, Serializable.\n' +
-                    '\n' +
-                    'Both ObjectInputStream and ObjectOutputStream are high level classes that extend java.io.InputStream and java.io.OutputStream, respectively.\n' +
-                    'ObjectOutputStream can write primitive types and graphs of objects to an OutputStream as a stream of bytes. We can then read these streams using\n' +
-                    'ObjectInputStream.\n' +
-                    '\n' +
-                    'The most important method in ObjectOutputStream is:\n' +
-                    '\n' +
+                mdFileData: '**Serialization** is the conversion of the state of an object into a byte stream; deserialization does the opposite. Stated differently, serialization \n' +
+                    'is the conversion of a Java object into a static stream (sequence) of bytes, which we can then save to a database or transfer over a network. \n' +
+                    ' \n' +
+                    '![Serialization](https://  req.headers.host  /assets/java/gettingDeeper/serialization.png)\n' +
+                    ' \n' +
+                    'The serialization process is instance-independent; for example, we can serialize objects on one platform and deserialize them on another. Classes that \n' +
+                    'are eligible for serialization need to implement a special marker interface, Serializable. \n' +
+                    ' \n' +
+                    'Both ObjectInputStream and ObjectOutputStream are high level classes that extend java.io.InputStream and java.io.OutputStream, respectively. \n' +
+                    'ObjectOutputStream can write primitive types and graphs of objects to an OutputStream as a stream of bytes. We can then read these streams using \n' +
+                    'ObjectInputStream. \n' +
+                    ' \n' +
+                    'The most important method in ObjectOutputStream is: \n' +
+                    ' \n' +
                     '```java\n' +
-                    'public final void writeObject(Object o)throws IOException;\n' +
-                    '```\n' +
+                    'public final void writeObject(Object o)throws IOException; \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'This method takes a serializable object and converts it into a sequence (stream) of bytes. Similarly, the most important method in ObjectInputStream \n' +
+                    'is: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'public final Object readObject()throws IOException,ClassNotFoundException; \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'This method can read a stream of bytes and convert it back into a Java object. It can then be cast back to the original object. \n' +
+                    ' \n' +
+                    'Let\\s illustrate serialization with a Person class. Note that static fields belong to a class (as opposed to an object) and are not serialized. Also, \n' +
+                    'note that we can use the keyword transient to ignore class fields during serialization: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'public class Person implements Serializable \n' +
+                    '{ \n' +
+                    '    private static final long serialVersionUID = 1L; \n' +
+                    '    static String country = "ITALY"; \n' +
+                    '    private int age; \n' +
+                    '    private String name; \n' +
+                    '    transient int height; \n' +
+                    '    // getters and setters \n' +
+                    '} \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'The test below shows an example of saving an object of type Person to a local file, and then reading the value back in: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    '@Test public void whenSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException{ \n' +
+                    '    Person person=new Person(); \n' +
+                    '    person.setAge(20); \n' +
+                    '    person.setName("Joe"); \n' +
+                    '     \n' +
+                    '    FileOutputStream fileOutputStream=new FileOutputStream("yourfile.txt"); \n' +
+                    '    ObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream); \n' +
+                    '    objectOutputStream.writeObject(person); \n' +
+                    '    objectOutputStream.flush(); \n' +
+                    '    objectOutputStream.close(); \n' +
+                    '     \n' +
+                    '    FileInputStream fileInputStream=new FileInputStream("yourfile.txt"); \n' +
+                    '    ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream); \n' +
+                    '    Person p2=(Person)objectInputStream.readObject(); \n' +
+                    '    objectInputStream.close(); \n' +
+                    '     \n' +
+                    '    assertTrue(p2.getAge()==person.getAge()); \n' +
+                    '    assertTrue(p2.getName().equals(person.getName())); \n' +
+                    '} \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'We used ObjectOutputStream for saving the state of this object to a file using FileOutputStream. The file “yourfile.txt” is created in the project \n' +
+                    'directory. This file is then loaded using FileInputStream. ObjectInputStream picks this stream up and converts it into a new object called p2. \n' +
+                    ' \n' +
+                    'Finally, we\\ll test the state of the loaded object, and ensure it matches the state of the original object. \n' +
+                    ' \n' +
+                    '> Note that we have to explicitly cast the loaded object to a Person type. \n' +
+                    ' \n' +
+                    '### Java Serialization Caveats \n' +
+                    ' \n' +
+                    'There are some caveats which concern serialization in Java. \n' +
+                    ' \n' +
+                    '#### 1. Inheritance and Composition \n' +
+                    ' \n' +
+                    'When a class implements the java.io.Serializable interface, all its sub-classes are serializable as well. Conversely, when an object has a reference \n' +
+                    'to another object, these objects must implement the Serializable interface separately, or else a NotSerializableException will be thrown: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'public class Person implements Serializable \n' +
+                    '{ \n' +
+                    '    private int age; \n' +
+                    '    private String name; \n' +
+                    '    private Address country; // must be serializable too \n' +
+                    '} \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'If one of the fields in a serializable object consists of an array of objects, then all of these objects must be serializable as well, or else a \n' +
+                    'NotSerializableException will be thrown. \n' +
+                    ' \n' +
+                    '#### 2. Serial Version UID \n' +
+                    ' \n' +
+                    '**The JVM associates a version (long) number with each serializable class.** We use it to verify that the saved and loaded objects have the same \n' +
+                    'attributes, and thus are compatible on serialization. \n' +
+                    ' \n' +
+                    'Most IDEs can generate this number automatically, and it\\s based on the class name, attributes, and associated access modifiers. Any changes result in \n' +
+                    'a different number can cause an InvalidClassException. \n' +
+                    ' \n' +
+                    'If a serializable class doesn declare a serialVersionUID, the JVM will generate one automatically at run-time. However, it\\s highly recommended that \n' +
+                    'each class declares its serialVersionUID, as the generated one is compiler dependent and thus may result in unexpected InvalidClassExceptions. \n' +
+                    ' \n' +
+                    '#### 3. Custom Serialization in Java \n' +
+                    ' \n' +
+                    'Java specifies a default way to serialize objects, but Java classes can override this default behavior. Custom serialization can be particularly \n' +
+                    'useful when trying to serialize an object that has some unserializable attributes. We can do this by providing two methods inside the class that we \n' +
+                    'want to serialize: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'private void writeObject(ObjectOutputStream out)throws IOException; \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'and \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'private void readObject(ObjectInputStream in)throws IOException,ClassNotFoundException; \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'With these methods, we can serialize the unserializable attributes into other forms that we can serialize: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    'public class Employee implements Serializab \n' +
+                    '{ \n' +
+                    '    private static final long serialVersionUID = 1L; \n' +
+                    '    private transient Address address; \n' +
+                    '    private Person person; \n' +
+                    '     \n' +
+                    '    // setters and getters\n' +
+                    '    private void writeObject(ObjectOutputStream oos) throws IOException \n' +
+                    '    { \n' +
+                    '    oos.defaultWriteObject(); \n' +
+                    '    oos.writeObject(address.getHouseNumber()); \n' +
+                    '    } \n' +
+                    '     \n' +
+                    '    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException \n' +
+                    '    { \n' +
+                    '    ois.defaultReadObject(); \n' +
+                    '    Integer houseNumber = (Integer) ois.readObject(); \n' +
+                    '    Address a = new Address(); \n' +
+                    '    a.setHouseNumber(houseNumber); \n' +
+                    '    this.setAddress(a); \n' +
+                    '    } \n' +
+                    '} \n' +
+                    '``` \n' +
                     '\n' +
-                    'This method takes a serializable object and converts it into a sequence (stream) of bytes. Similarly, the most important method in ObjectInputStream\n' +
-                    'is:\n' +
-                    '\n' +
-                    '```java\n' +
-                    'public final Object readObject()throws IOException,ClassNotFoundException;\n' +
-                    '```\n' +
-                    '\n' +
-                    'This method can read a stream of bytes and convert it back into a Java object. It can then be cast back to the original object.\n' +
-                    '\n' +
-                    'Let\'s illustrate serialization with a Person class. Note that static fields belong to a class (as opposed to an object) and are not serialized. Also,\n' +
-                    'note that we can use the keyword transient to ignore class fields during serialization:\n' +
-                    '\n' +
-                    '```java\n' +
-                    'public class Person implements Serializable\n' +
-                    '{' +
-                    '\tprivate static final long serialVersionUID = 1L;' +
-                    '\tstatic String country = "ITALY";' +
-                    '\tprivate int age;' +
-                    '\tprivate String name;' +
-                    '\ttransient int height;' +
-                    '\t// getters and setters' +
-                    '}' +
-                    '```\n' +
-                    '\n' +
-                    'The test below shows an example of saving an object of type Person to a local file, and then reading the value back in:\n' +
-                    '\n' +
-                    '```java\n' +
-                    '@Test public void whenSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException{' +
-                    '\t\tPerson person=new Person();' +
-                    '\t\tperson.setAge(20);' +
-                    '\t\tperson.setName("Joe");' +
-                    '\n' +
-                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile.txt");' +
-                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);' +
-                    '\t\tobjectOutputStream.writeObject(person);' +
-                    '\t\tobjectOutputStream.flush();' +
-                    '\t\tobjectOutputStream.close();' +
-                    '\n' +
-                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile.txt");' +
-                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);' +
-                    '\t\tPerson p2=(Person)objectInputStream.readObject();' +
-                    '\t\tobjectInputStream.close();' +
-                    '\n' +
-                    '\t\tassertTrue(p2.getAge()==person.getAge());' +
-                    '\t\tassertTrue(p2.getName().equals(person.getName()));' +
-                    '\t\t}' +
-                    '```\n' +
-                    '\n' +
-                    'We used ObjectOutputStream for saving the state of this object to a file using FileOutputStream. The file “yourfile.txt” is created in the project\n' +
-                    'directory. This file is then loaded using FileInputStream. ObjectInputStream picks this stream up and converts it into a new object called p2.\n' +
-                    '\n' +
-                    'Finally, we\'ll test the state of the loaded object, and ensure it matches the state of the original object.\n' +
-                    '\n' +
-                    '> Note that we have to explicitly cast the loaded object to a Person type.\n' +
-                    '\n' +
-                    '### Java Serialization Caveats\n' +
-                    '\n' +
-                    'There are some caveats which concern serialization in Java.\n' +
-                    '\n' +
-                    '#### 1. Inheritance and Composition\n' +
-                    '\n' +
-                    'When a class implements the java.io.Serializable interface, all its sub-classes are serializable as well. Conversely, when an object has a reference\n' +
-                    'to another object, these objects must implement the Serializable interface separately, or else a NotSerializableException will be thrown:\n' +
-                    '\n' +
-                    '```java\n' +
-                    'public class Person implements Serializable\n' +
-                    '{' +
-                    '\tprivate int age;' +
-                    '\tprivate String name;' +
-                    '\tprivate Address country; // must be serializable too' +
-                    '}' +
-                    '```\n' +
-                    '\n' +
-                    'If one of the fields in a serializable object consists of an array of objects, then all of these objects must be serializable as well, or else a\n' +
-                    'NotSerializableException will be thrown.\n' +
-                    '\n' +
-                    '#### 2. Serial Version UID\n' +
-                    '\n' +
-                    '**The JVM associates a version (long) number with each serializable class.** We use it to verify that the saved and loaded objects have the same\n' +
-                    'attributes, and thus are compatible on serialization.\n' +
-                    '\n' +
-                    'Most IDEs can generate this number automatically, and it\'s based on the class name, attributes, and associated access modifiers. Any changes result in\n' +
-                    'a different number can cause an InvalidClassException.\n' +
-                    '\n' +
-                    'If a serializable class doesn\'t declare a serialVersionUID, the JVM will generate one automatically at run-time. However, it\'s highly recommended that\n' +
-                    'each class declares its serialVersionUID, as the generated one is compiler dependent and thus may result in unexpected InvalidClassExceptions.\n' +
-                    '\n' +
-                    '#### 3. Custom Serialization in Java\n' +
-                    '\n' +
-                    'Java specifies a default way to serialize objects, but Java classes can override this default behavior. Custom serialization can be particularly\n' +
-                    'useful when trying to serialize an object that has some unserializable attributes. We can do this by providing two methods inside the class that we\n' +
-                    'want to serialize:\n' +
-                    '\n' +
-                    '```java\n' +
-                    'private void writeObject(ObjectOutputStream out)throws IOException;\n' +
-                    '```\n' +
-                    '\n' +
-                    'and\n' +
-                    '\n' +
-                    '```java\n' +
-                    'private void readObject(ObjectInputStream in)throws IOException,ClassNotFoundException;\n' +
-                    '```\n' +
-                    '\n' +
-                    'With these methods, we can serialize the unserializable attributes into other forms that we can serialize:\n' +
-                    '\n' +
-                    '```java\n' +
-                    'public class Employee implements Serializab' +
-                    '{' +
-                    '\tprivate static final long serialVersionUID = 1L;' +
-                    '\tprivate transient Address address;' +
-                    '\tprivate Person person;' +
-                    '\n' +
-                    '\t// setters and getters' +
-                    '\n' +
-                    '\tprivate void writeObject(ObjectOutputStream oos) throws IOException' +
-                    '\t{\n' +
-                    '\t\toos.defaultWriteObject();' +
-                    '\t\toos.writeObject(address.getHouseNumber());' +
-                    '\t}' +
-                    '\n' +
-                    '\tprivate void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException' +
-                    '\t{' +
-                    '\t\tois.defaultReadObject();' +
-                    '\t\tInteger houseNumber = (Integer) ois.readObject();' +
-                    '\t\tAddress a = new Address();' +
-                    '\t\ta.setHouseNumber(houseNumber);' +
-                    '\t\tthis.setAddress(a);' +
-                    '\t}' +
-                    '}' +
-                    '```' +
-                    '\n' +
-                    '```java\n' +
+                    '```java \n' +
                     'public class Address\n' +
-                    '{' +
-                    '\tprivate int houseNumber;' +
-                    '\t// setters and getters' +
-                    '}' +
-                    '```' +
-                    '\n' +
-                    'We can run the following unit test to test this custom serialization:\n' +
-                    '\n' +
-                    '```java\n' +
-                    '@Test public void whenCustomSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException' +
-                    '\t\t{' +
-                    '\t\tPerson p=new Person();' +
-                    '\t\tp.setAge(20);' +
-                    '\t\tp.setName("Joe");' +
-                    '\n' +
-                    '\t\tAddress a=new Address();' +
-                    '\t\ta.setHouseNumber(1);' +
-                    '\n' +
-                    '\t\tEmployee e=new Employee();' +
-                    '\t\te.setPerson(p);' +
-                    '\t\te.setAddress(a);' +
-                    '\n' +
-                    '\t\tFileOutputStream fileOutputStream=new FileOutputStream("yourfile2.txt");' +
-                    '\t\tObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream);' +
-                    '\t\tobjectOutputStream.writeObject(e);' +
-                    '\t\tobjectOutputStream.flush();' +
-                    '\t\tobjectOutputStream.close();' +
-                    '\n' +
-                    '\t\tFileInputStream fileInputStream=new FileInputStream("yourfile2.txt");' +
-                    '\t\tObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);' +
-                    '\t\tEmployee e2=(Employee)objectInputStream.readObject();' +
-                    '\t\tobjectInputStream.close();' +
-                    '\n' +
-                    '\t\tassertTrue(' +
-                    '\t\te2.getPerson().getAge()==e.getPerson().getAge());' +
-                    '\t\tassertTrue(' +
-                    '\t\te2.getAddress().getHouseNumber()==e.getAddress().getHouseNumber());' +
-                    '\t\t}' +
-                    '```' +
-                    '\n' +
-                    'In this code, we can see how to save some unserializable attributes by serializing Address with custom serialization. Note that we must mark the\n' +
-                    'unserializable attributes as transient to avoid the NotSerializableException.\n' +
-                    '\n',
+                    '{\n' +
+                    '    private int houseNumber;\n' +
+                    '    \n' +
+                    '    public int getHouseNumber()\n' +
+                    '    {\n' +
+                    '        return houseNumber;\n' +
+                    '    }\n' +
+                    '    \n' +
+                    '    public void setHouseNumber(int houseNumber)\n' +
+                    '    {\n' +
+                    '        this.houseNumber = houseNumber;\n' +
+                    '    }\n' +
+                    '} \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'We can run the following unit test to test this custom serialization: \n' +
+                    ' \n' +
+                    '```java \n' +
+                    '@Test public void whenCustomSerializingAndDeserializing_ThenObjectIsTheSame()throws IOException,ClassNotFoundException \n' +
+                    '{ \n' +
+                    '    Person p=new Person(); \n' +
+                    '    p.setAge(20); \n' +
+                    '    p.setName("Joe"); \n' +
+                    '     \n' +
+                    '    Address a=new Address(); \n' +
+                    '    a.setHouseNumber(1); \n' +
+                    '     \n' +
+                    '    Employee e=new Employee(); \n' +
+                    '    e.setPerson(p); \n' +
+                    '    e.setAddress(a); \n' +
+                    '     \n' +
+                    '    FileOutputStream fileOutputStream=new FileOutputStream("yourfile2.txt"); \n' +
+                    '    ObjectOutputStream objectOutputStream=new ObjectOutputStream(fileOutputStream); \n' +
+                    '    objectOutputStream.writeObject(e); \n' +
+                    '    objectOutputStream.flush(); \n' +
+                    '    objectOutputStream.close(); \n' +
+                    '     \n' +
+                    '    FileInputStream fileInputStream=new FileInputStream("yourfile2.txt"); \n' +
+                    '    ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream); \n' +
+                    '    Employee e2=(Employee)objectInputStream.readObject(); \n' +
+                    '    objectInputStream.close(); \n' +
+                    '     \n' +
+                    '    assertTrue( \n' +
+                    '    e2.getPerson().getAge()==e.getPerson().getAge()); \n' +
+                    '    assertTrue( \n' +
+                    '    e2.getAddress().getHouseNumber()==e.getAddress().getHouseNumber()); \n' +
+                    '} \n' +
+                    '``` \n' +
+                    ' \n' +
+                    'In this code, we can see how to save some unserializable attributes by serializing Address with custom serialization. Note that we must mark the \n' +
+                    'unserializable attributes as transient to avoid the NotSerializableException. \n',
             }
         default:
             return {
