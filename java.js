@@ -4,6 +4,12 @@ function fetchJavaRoadMapData(req) {
     let url = require('url');
     let url_parts = url.parse(req.url, true);
     let query = url_parts.query;
+    let action = query['action'];
+    if (action && action === "fetchCompletedSubTopics") {
+        return {
+            "completed": ["Packages", "MemoryManagement", "CollectionFramework", "Generics", "Serialization"]
+        }
+    }
     let topic = query['topic'];
     let subTopic = query['subTopic'];
     if (!topic || !subTopic)
