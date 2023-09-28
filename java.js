@@ -7,7 +7,7 @@ function fetchJavaRoadMapData(req) {
     let action = query['action'];
     if (action && action === "fetchCompletedSubTopics") {
         return {
-            "completed": ["Packages", "MemoryManagement", "CollectionFramework", "Generics", "Serialization"]
+            "completed": ["Packages", "MemoryManagement", "CollectionFramework", "Generics", "Serialization", "NetworkingAndSockets"]
         }
     }
     let topic = query['topic'];
@@ -1006,6 +1006,191 @@ function fetchGettingDeeperData(subTopic, req) {
                     ' \n' +
                     'In this code, we can see how to save some unserializable attributes by serializing Address with custom serialization. Note that we must mark the \n' +
                     'unserializable attributes as transient to avoid the NotSerializableException. \n',
+            }
+        case "NetworkingAndSockets":
+            return {
+                mdFileData:'**Java Networking**\n' +
+                    '\n' +
+                    'Java sockets are equivalent to Java networking.\n' +
+                    '\n' +
+                    'Sockets are the basic building blocks of network communication in Java. They are used to establish a\n' +
+                    'two-way communication link between two programs running on different computers on a network using TCP.\n' +
+                    '\n' +
+                    'The Java networking API provides a set of classes and interfaces for socket programming. The most important classes are the Socket class and the\n' +
+                    'ServerSocket class. The Socket class represents a socket endpoint, while the ServerSocket class represents a server socket that listens for incoming\n' +
+                    'connections.\n' +
+                    '\n' +
+                    'To use sockets for network communication, you first need to create a Socket object. This can be done by connecting to a remote server socket or by\n' +
+                    'accepting an incoming connection from a remote client. Once you have a Socket object, you can use it to read and write data to and from the remote\n' +
+                    'host.\n' +
+                    '\n' +
+                    '```java\n' +
+                    'import java.io.IOException;\n' +
+                    'import java.io.InputStream;\n' +
+                    'import java.io.OutputStream;\n' +
+                    'import java.net.Socket;\n' +
+                    '\n' +
+                    'public class SocketClient\n' +
+                    '{\n' +
+                    '\n' +
+                    '   public static void main(String[] args) throws IOException\n' +
+                    '   {\n' +
+                    '      // Create a socket object and connect to the server\n' +
+                    '      Socket socket = new Socket("localhost", 8080);\n' +
+                    '\n' +
+                    '      // Get the input and output streams for the socket\n' +
+                    '      InputStream in = socket.getInputStream();\n' +
+                    '      OutputStream out = socket.getOutputStream();\n' +
+                    '\n' +
+                    '      // Write a message to the server\n' +
+                    '      out.write("Hello, world!".getBytes());\n' +
+                    '\n' +
+                    '      // Read the response from the server\n' +
+                    '      byte[] buffer = new byte[1024];\n' +
+                    '      int read = in.read(buffer);\n' +
+                    '\n' +
+                    '      // Print the response from the server\n' +
+                    '      System.out.println(new String(buffer, 0, read));\n' +
+                    '\n' +
+                    '      // Close the socket\n' +
+                    '      socket.close();\n' +
+                    '   }\n' +
+                    '}\n' +
+                    '```\n' +
+                    '\n' +
+                    'This program creates a socket object and connects to the server running on localhost on port 8080. It then writes the message "Hello, world!" to the\n' +
+                    'server and reads the response. The response is then printed to the console.\n' +
+                    '\n' +
+                    'Java sockets are a powerful tool for network communication. They can be used to develop a wide variety of network applications, such as web servers,\n' +
+                    'chat clients, and file transfer programs.\n' +
+                    '\n' +
+                    'The java.net package provides support for the two common network protocols:\n' +
+                    '\n' +
+                    '1. **TCP:** TCP stands for Transmission Control Protocol, which allows for reliable communication between two applications. TCP is typically used over\n' +
+                    '   the Internet Protocol, which is referred to as TCP/IP.\n' +
+                    '2. **UDP:** UDP stands for User Datagram Protocol, a connection-less protocol that allows for packets of data to be transmitted between applications.\n' +
+                    '\n' +
+                    'A client program creates a socket on its end of the communication and attempts to connect that socket to a server.\n' +
+                    '\n' +
+                    'When the connection is made, the server creates a socket object on its end of the communication. The client and the server can now communicate by\n' +
+                    'writing to and reading from the socket.\n' +
+                    '\n' +
+                    'The java.net.Socket class represents a socket, and the java.net.ServerSocket class provides a mechanism for the server program to listen for clients\n' +
+                    'and establish connections with them.\n' +
+                    '\n' +
+                    'The following steps occur when establishing a TCP connection between two computers using sockets:\n' +
+                    '\n' +
+                    '1. The server invokes the accept() method of the ServerSocket class. This method waits until a client connects to the server on the given port.\n' +
+                    '2. After the server is waiting, a client instantiates a Socket object, specifying the server name and the port number to connect to.\n' +
+                    '3. The constructor of the Socket class attempts to connect the client to the specified server and the port number. If communication is established,\n' +
+                    '   the client now has a Socket object capable of communicating with the server.\n' +
+                    '4. On the server side, the accept() method returns a reference to a new socket on the server that is connected to the client\'s socket.\n' +
+                    '\n' +
+                    'After the connections are established, communication can occur using I/O streams. Each socket has both an OutputStream and an InputStream. The\n' +
+                    'client\'s OutputStream is connected to the server\'s InputStream, and the client\'s InputStream is connected to the server\'s OutputStream.\n' +
+                    '\n' +
+                    '### Socket Client Example\n' +
+                    '\n' +
+                    '```java\n' +
+                    '// File Name GreetingClient.java\n' +
+                    '\n' +
+                    'import java.net.*;\n' +
+                    'import java.io.*;\n' +
+                    '\n' +
+                    'public class GreetingClient\n' +
+                    '{\n' +
+                    '\n' +
+                    '   public static void main(String[] args)\n' +
+                    '   {\n' +
+                    '      String serverName = args[0];\n' +
+                    '      int port = Integer.parseInt(args[1]);\n' +
+                    '      try\n' +
+                    '      {\n' +
+                    '         System.out.println("Connecting to " + serverName + " on port " + port);\n' +
+                    '         Socket client = new Socket(serverName, port);\n' +
+                    '\n' +
+                    '         System.out.println("Just connected to " + client.getRemoteSocketAddress());\n' +
+                    '         OutputStream outToServer = client.getOutputStream();\n' +
+                    '         DataOutputStream out = new DataOutputStream(outToServer);\n' +
+                    '\n' +
+                    '         out.writeUTF("Hello from " + client.getLocalSocketAddress());\n' +
+                    '         InputStream inFromServer = client.getInputStream();\n' +
+                    '         DataInputStream in = new DataInputStream(inFromServer);\n' +
+                    '\n' +
+                    '         System.out.println("Server says " + in.readUTF());\n' +
+                    '         client.close();\n' +
+                    '      }\n' +
+                    '      catch (IOException e)\n' +
+                    '      {\n' +
+                    '         e.printStackTrace();\n' +
+                    '      }\n' +
+                    '   }\n' +
+                    '}\n' +
+                    '```\n' +
+                    '\n' +
+                    '### Socket Server Example\n' +
+                    '\n' +
+                    '```java\n' +
+                    'import java.net.*;\n' +
+                    'import java.io.*;\n' +
+                    '\n' +
+                    'public class GreetingServer extends Thread\n' +
+                    '{\n' +
+                    '   private ServerSocket serverSocket;\n' +
+                    '\n' +
+                    '   public GreetingServer(int port) throws IOException\n' +
+                    '   {\n' +
+                    '      serverSocket = new ServerSocket(port);\n' +
+                    '      serverSocket.setSoTimeout(10000);\n' +
+                    '   }\n' +
+                    '\n' +
+                    '   public void run()\n' +
+                    '   {\n' +
+                    '      while (true)\n' +
+                    '      {\n' +
+                    '         try\n' +
+                    '         {\n' +
+                    '            System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");\n' +
+                    '            Socket server = serverSocket.accept();\n' +
+                    '\n' +
+                    '            System.out.println("Just connected to " + server.getRemoteSocketAddress());\n' +
+                    '            DataInputStream in = new DataInputStream(server.getInputStream());\n' +
+                    '\n' +
+                    '            System.out.println(in.readUTF());\n' +
+                    '            DataOutputStream out = new DataOutputStream(server.getOutputStream());\n' +
+                    '            out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\\nGoodbye!");\n' +
+                    '            server.close();\n' +
+                    '\n' +
+                    '         }\n' +
+                    '         catch (SocketTimeoutException s)\n' +
+                    '         {\n' +
+                    '            System.out.println("Socket timed out!");\n' +
+                    '            break;\n' +
+                    '         }\n' +
+                    '         catch (IOException e)\n' +
+                    '         {\n' +
+                    '            e.printStackTrace();\n' +
+                    '            break;\n' +
+                    '         }\n' +
+                    '      }\n' +
+                    '   }\n' +
+                    '\n' +
+                    '   public static void main(String[] args)\n' +
+                    '   {\n' +
+                    '      int port = Integer.parseInt(args[0]);\n' +
+                    '      try\n' +
+                    '      {\n' +
+                    '         Thread t = new GreetingServer(port);\n' +
+                    '         t.start();\n' +
+                    '      }\n' +
+                    '      catch (IOException e)\n' +
+                    '      {\n' +
+                    '         e.printStackTrace();\n' +
+                    '      }\n' +
+                    '   }\n' +
+                    '}\n' +
+                    '```\n' +
+                    '\n',
             }
         default:
             return {
