@@ -12,7 +12,7 @@ app.use('/assets', express.static('assets'));
 
 let serverPublicIP = null;
 app.put("/update-server-public-ip", (req, res) => {
-    if (!req.body)
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0)
     {
         res.status(400).send("Not Allowed To Send Empty String")
         return;
