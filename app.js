@@ -4,9 +4,21 @@ const {fetchJavaRoadMapData} = require("./java");
 const app = express();
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.text());
 app.use(express.static('public'));
 app.use('/assets', express.static('assets'));
+
+let serverPublicIP = null;
+app.put("/update-server-public-ip", (req, res) => {
+    serverPublicIP = req.body;
+    res.type('text').send(req.body);
+});
+app.get("/get-server-public-ip", (req, res) => {
+    res.type('text').send(serverPublicIP);
+});
+
 app.get("/*", (req, res) => res.type('json').send(fetchRoadMapData(req)));
 
 
